@@ -81,9 +81,30 @@
 // ---------------
 // ---------------
 // FILTER
-const nilai = [50, 70, 40, 100];
+// const nilai = [50, 70, 40, 100];
 
-const nilaiDibawah75 = nilai.filter((value, index) => {
-    return value < 75 && index == 0;
-})
-console.log(`nilai baru: ${nilaiDibawah75}`);// kalau ga memenuhi kriteria maka isi arraynya kosong/null
+// const nilaiDibawah75 = nilai.filter((value, index) => {
+//     return value < 75 && index == 0;
+// })
+// console.log(`nilai baru: ${nilaiDibawah75}`);// kalau ga memenuhi kriteria maka isi arraynya kosong/null
+
+//tugas: buat array isi 1-10 bikin pengulangan untuk ngefilter ganjil atau genap
+//const ganjil;
+//const genap;
+
+const nilai = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] ;
+const nilaiGanjil =[];
+const nilaiGenap = [];
+    nilai.map((value,index) => {
+        if(value%2 !== 0){
+            //nilaiGanjil[index] = value;
+            nilaiGanjil.push(value);
+            //console.log('nilaiGanjil')
+        }else{
+            //nilaiGenap[index] = value;
+            nilaiGenap.push(value);
+            //console.log('nilaiGenap')
+        }
+    })
+console.log(`Nilai Ganjil adalah: ${nilaiGanjil}`)
+console.log(`Nilai Genap adalah: ${nilaiGenap}`)
