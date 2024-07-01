@@ -35,14 +35,14 @@ const db = pgp({
 //get list semua buku, bisa search by judul method : GET
 fastify.get('/buku', async function (request, reply) {
   if(request.query.search){ //cek apakah mengirim query
-    const buku = await db.query("select * from buku where judul ilike $1",[`%${request.query.search}%`]
+    const buku = await db.query("select * from buku where judul ilike $1",[`%${request.query.search}%`] //get buku by judul from db
     );
       if (!buku || buku.length === 0) {
         return reply.code(404).send({ message: 'Data dengan judul tersebut tidak ditemukan' }); //kalau data dengan judul yg dicari ga ada
       };
     return buku; //menampilkan data buku sbg response dari api
   }else{
-    const buku = await db.query("select * from buku"); //get all buku
+    const buku = await db.query("select * from buku"); //get all buku from db
          return buku; //menampilkan data buku sbg response dari api
   };  
 })
@@ -51,7 +51,7 @@ fastify.get('/buku/:id', async function (request, reply) {
   if (!request.params.id) { //kalau tidak mengirim id
     return reply.code(400).send({ message: 'ID is required' }); // menampilkan msg error sbg response dari api
   }
-  const buku = await db.query("select * from buku where id = $1",[request.params.id]);
+  const buku = await db.query("select * from buku where id = $1",[request.params.id]); //get buku by id from db
       if (!buku || buku.length === 0) { //kalau data dengan id yg dikirim ga ada
         return reply.code(404).send({ message: 'Data dengan id tersebut tidak ditemukan' }); //menampilkan msg error sbg response dari api
       }
@@ -60,7 +60,7 @@ fastify.get('/buku/:id', async function (request, reply) {
 // insert data buku. method : POST
 fastify.post('/buku', async function (request, reply) {
   const buku = await db.query(
-    "INSERT INTO buku (sku, judul, harga, stock) VALUES ($1, $2, $3, $4) RETURNING *",
+    "INSERT INTO buku (sku, judul, harga, stock) VALUES ($1, $2, $3, $4) RETURNING *", //menambah data buku ke db
     [
       request.body.sku,
       request.body.judul,
@@ -81,7 +81,7 @@ fastify.put('/buku/:id', async function (request, reply) {
     return reply.code(400).send({ message: 'ID is required' }); //menampilkan msg error sbg response api
   }
   const buku = await db.query(
-    "UPDATE buku SET sku = $1, judul = $2, harga = $3, stock = $4 WHERE id = $5 RETURNING *",
+    "UPDATE buku SET sku = $1, judul = $2, harga = $3, stock = $4 WHERE id = $5 RETURNING *", //update data buku by id ke db
     [
       request.body.sku,
       request.body.judul,
@@ -103,7 +103,7 @@ fastify.delete('/buku/:id', async function (request, reply) {
     if (!request.params.id) { //cek apakah mengirim id
       return reply.code(400).send({ message: 'ID is required' }); //menampilkan msg error sbg response dari api
     }
-    const buku = await db.query("delete from buku where id = $1 RETURNING id",
+    const buku = await db.query("delete from buku where id = $1 RETURNING id", //hapus data buku by id di db
       [request.params.id]
     );
 
